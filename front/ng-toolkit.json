@@ -1,0 +1,15 @@
+{
+  "serverless": {
+    "project": "ErdGeneratorFront",
+    "provider": "aws",
+    "skipInstall": false,
+    "directory": ".",
+    "lambdaTS": false,
+    "offline": false,
+    "clientProject": "ErdGeneratorFront",
+    "serverless": {
+      "aws": {},
+      "gcloud": {}
+    }
+  }
+}

@@ -1,0 +1,101 @@
+<div>
+  <div class="create-table-container"></div>
+  <mat-form-field class="example-container">
+    <input matInput placeholder="Enter Table Name" [formControl]="tableName" (input)="onTableNameChange($event.target.value)" required />
+    <mat-error *ngIf="tableName.invalid">{{ getErrorMessage("tableName") }}</mat-error>
+  </mat-form-field>
+  <div *ngIf="!tableName.invalid" class="generaters-buttons-container">
+    <mat-icon *ngIf="!generatColPrimaryKey" aria-hidden="false" aria-label="Example home icon">vpn_key</mat-icon>
+    <button mat-button *ngIf="!generatColPrimaryKey" (click)="generateCol('primaryKey')">
+      Generate Primary Key
+    </button>
+  </div>
+  <div *ngIf="!tableName.invalid" class="generaters-buttons-container">
+    <mat-icon *ngIf="!generatColCreatedAt || !generatColCreatedBy" aria-hidden="false" aria-label="Example home icon">create</mat-icon>
+    <button mat-button *ngIf="!generatColCreatedAt" (click)="generateCol('createdAt')">Generate Created At<mat-icon aria-hidden="false" aria-label="Example home icon">access_time</mat-icon></button>
+    <button mat-button *ngIf="!generatColCreatedBy" (click)="generateCol('createdBy')">Generate Created By<mat-icon aria-hidden="false" aria-label="Example home icon"> person</mat-icon></button>
+  </div>
+  <div *ngIf="!tableName.invalid" class="generaters-buttons-container">
+    <mat-icon *ngIf="!generatColUpdatedAt || !generatColUpdatedBy" aria-hidden="false" aria-label="Example home icon">build</mat-icon>
+    <button mat-button *ngIf="!generatColUpdatedAt" (click)="generateCol('updatedAt')">Generate Updated At<mat-icon aria-hidden="false" aria-label="Example home icon">access_time</mat-icon></button>
+    <button mat-button *ngIf="!generatColUpdatedBy" (click)="generateCol('updatedBy')">Generate Updated By<mat-icon aria-hidden="false" aria-label="Example home icon">person</mat-icon></button>
+  </div>
+
+  <mat-table #table class="table-container" matSort [dataSource]="dataSource">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+      <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+    </ng-container>
+    <ng-container matColumnDef="nullable">
+      <th mat-header-cell *matHeaderCellDef>Nullable</th>
+      <td mat-cell *matCellDef="let element">
+        <section class="example-section">
+          <mat-slide-toggle class="example-margin" [color]="'accent'" (change)="element.nullable = $event.checked" [checked]="element.nullable"> </mat-slide-toggle>
+        </section>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="isPk">
+      <th mat-header-cell *matHeaderCellDef>
+        Is Primary Key
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <section class="example-section">
+          <mat-slide-toggle class="example-margin" [color]="'accent'" (change)="element.isPk = $event.checked" [checked]="element.isPk"> </mat-slide-toggle>
+        </section>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="relatedToTable">
+      <th mat-header-cell *matHeaderCellDef>
+        Related To Table
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.constraint?.tblParent }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="atColumn">
+      <th mat-header-cell *matHeaderCellDef>At Column</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.constraint?.colParent }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="fkName">
+      <th mat-header-cell *matHeaderCellDef>
+        Foreign key Name
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.constraint?.name }}</td>
+    </ng-container>
+    <!-- actions -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" (click)="addNew(undefined)">
+          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        </button>
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let row; let i = index">
+        <button mat-icon-button color="accent" (click)="startEdit(i, row.name, row.type, row.nullable, row.isPk)">
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+
+        <button mat-icon-button color="accent" (click)="deleteItem(i, row.name, row.type, row.nullable, row.isPk, row.relatedToTable, row.atColumn, row.fkName)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </mat-table>
+
+  <div [hidden]="!exampleDatabase.dataChange.value.length">
+    <mat-paginator class="paginator-container" #paginator [length]="exampleDatabase.dataChange.value.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"> </mat-paginator>
+  </div>
+
+  <button *ngIf="exampleDatabase.dataChange.value.length && !pendingRequest" class="generate-table-btn" mat-button (click)="generateTable()" color="red">
+    generate table
+  </button>
+  <mat-spinner *ngIf="pendingRequest" class="progress-spinner-btn"></mat-spinner>
+</div>

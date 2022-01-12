@@ -1,0 +1,29 @@
+<div class="container">
+    <h3 mat-dialog-title>Enter your db connection</h3>
+    <form class="db-form" (ngSubmit)="onDbSubmit()">
+        <mat-form-field class="db-full-width">
+            <mat-label>Db Host</mat-label>
+            <input matInput [formControl]="dbHost" placeholder="Enter the db host">
+        </mat-form-field>
+        <div></div>
+        <mat-form-field class="db-full-width">
+            <mat-label>Db Name</mat-label>
+            <input matInput [formControl]="dbName" placeholder="Enter the db name">
+        </mat-form-field>
+        <div></div>
+        <mat-form-field class="db-full-width">
+            <mat-label>Db User</mat-label>
+            <input matInput [formControl]="dbUser" placeholder="Enter the db user">
+        </mat-form-field>
+        <div></div>
+        <mat-form-field class="db-full-width">
+            <mat-label>Db Password</mat-label>
+            <input matInput [formControl]="dbPassword" placeholder="Enter the db password">
+        </mat-form-field>
+        <div></div>
+        <div mat-dialog-actions>
+            <button mat-button> Save </button>
+            <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+          </div>
+    </form>
+</div>

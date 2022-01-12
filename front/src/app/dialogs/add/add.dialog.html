@@ -1,0 +1,69 @@
+<div class="container">
+  <h3 mat-dialog-title>Add new Column</h3>
+
+  <form class="mat-dialog-content" (ngSubmit)="(submit)" #formControl="ngForm">
+    <div class="form">
+      <mat-form-field color="accent">
+        <textarea matInput #input class="form-control" placeholder="Name" [(ngModel)]="name"  name="name" required></textarea>
+        <!--mat-error-- *ngIf="formControl.invalid">{{
+          getErrorMessage()
+        }}</!--mat-error-->
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <mat-select placeholder="Choose Type" [(ngModel)]="type" name="type">
+        <mat-option *ngFor="let item of colTypes" value="{{ item }}" name=type>{{
+          item
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!--Contains mat-hint for characters count and has maxLengt set-->
+    <div class="form">
+      <mat-slide-toggle [(ngModel)]="nullable" name=false>Nullable</mat-slide-toggle>
+      <mat-slide-toggle [(ngModel)]="isPk" name=false>Primary Key</mat-slide-toggle>
+    </div>
+    <div class="form">
+      <mat-form-field>
+        <mat-select
+          placeholder="Choose Parent Table"
+          [(ngModel)]="tblParent"
+          (selectionChange)="constraintParentTableChange(tblParent)"
+          name= "table parent name"
+         [ngModelOptions]="{standalone: true}">
+          <mat-option
+            *ngFor="let item of parentTablesList"
+            value="{{ item }}"
+            >{{ item }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+
+
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <mat-select placeholder="Choose Parent Column" [(ngModel)]="colParent" name= "column parent name"  [ngModelOptions]="{standalone: true}">
+          <mat-option
+            *ngFor="let item of parentTableColumnsNames"
+            value="{{ item }}"
+            >{{ item }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+      <button
+        mat-button
+        [type]="submit"
+        [disabled]="!formControl.valid"
+        [mat-dialog-close]="1"
+        (click)="confirmAdd()"
+      >
+        Save
+      </button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>
+  </form>
+</div>

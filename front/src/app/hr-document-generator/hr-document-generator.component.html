@@ -1,0 +1,55 @@
+<div class="hr-doc-section">
+  <div *ngIf="hrDocTypsArr">
+    <h4>Welcome to Hr Docs</h4>
+    <mat-form-field>
+      <mat-label>Hr Document Type</mat-label>
+      <mat-select [(value)]="hrDocTypeSelected" (selectionChange)="docTypeChange(hrDocTypeSelected)">
+        <mat-option *ngFor="let hrDocType of hrDocTypsArr" [value]="hrDocType">
+          {{hrDocType.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div></div>
+
+    <mat-form-field *ngIf="hrSubSectionTemplateArr">
+      <mat-label>Hr Subsection Template</mat-label>
+      <mat-select [(value)]="hrSubSectionTemplateSelected" (selectionChange)="subsectionTamplateChange(hrSubSectionTemplateSelected)">
+        <mat-option *ngFor="let hrSubSectionTemplate of hrSubSectionTemplateArr" [value]="hrSubSectionTemplate">
+          {{hrSubSectionTemplate.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div></div>
+
+
+    <mat-form-field *ngIf="hrSubsectionArr">
+      <mat-label>Filter Subsection</mat-label>
+      <input matInput (keyup)="subsectionFilter($event)" placeholder="Ex. ium">
+    </mat-form-field>
+
+    <div *ngIf="hrSubsectionArr">
+      <mat-table #table [dataSource]="hrSubsectionDataSource" matSort class="mat-elevation-z8">
+
+        <ng-container matColumnDef={{col}} *ngFor="let col of hrSubsectionColumns | removeActionCol ">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{col}}. </th>
+          <td mat-cell *matCellDef="let element"> {{element[col]}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="viewQuestions">
+        <mat-header-cell  *matHeaderCellDef > Questions </mat-header-cell>
+        <mat-cell *matCellDef="let row; let i = index">
+          <button mat-icon-button color="primary">
+            <mat-icon aria-label="View Questions">visibility</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="hrSubsectionColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: hrSubsectionColumns;"></tr>
+      </mat-table>
+
+    </div>
+  </div>
+
+</div>

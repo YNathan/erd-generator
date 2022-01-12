@@ -1,0 +1,13 @@
+{
+    "dbConfig": {
+        "host": "127.0.0.1",
+        "port": 5432,
+        "dbName": "_test_sim",
+        "username": "postgres",
+        "password": "postgres"
+    },
+    "gitConfig":{
+        "token": "",
+        "gitRepo": "github.com//_server2.git"
+    }
+}

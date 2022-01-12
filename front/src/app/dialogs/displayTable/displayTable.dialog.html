@@ -1,0 +1,24 @@
+<div class="container">
+  <h3 mat-dialog-title>Table: {{data.tblName | fromTableNameToTitle}}</h3>
+  <div mat-dialog-content>
+      <table>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Is Primary Key</th>
+            <th>Nullable</th>
+          </tr>
+          <tr *ngFor="let item of data.columns">
+            <td>{{item.name}}</td>
+            <td>{{item.type}} </td>
+            <td>{{item.isPk}}</td>
+            <td>{{item.allowNull}}</td>
+          </tr>
+        </table>
+    
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()" tabindex="-1">Exit</button>
+  </div>
+</div>

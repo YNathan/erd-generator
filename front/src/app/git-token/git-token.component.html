@@ -1,0 +1,16 @@
+<div class="container">
+    <h3 mat-dialog-title>Enter your github token</h3>
+    <div mat-dialog-actions>
+        <mat-form-field class="git-full-width">
+            <mat-label>Github token</mat-label>
+            <input matInput [formControl]="gitToken" placeholder="Enter git token">
+        </mat-form-field>
+        <button
+          mat-button            
+          (click)="onDbSubmit()"
+        >
+          Save
+        </button>
+        <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+      </div>
+</div>

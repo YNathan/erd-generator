@@ -1,0 +1,5 @@
+{
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "html.format.wrapLineLength": 1200,
+    "typescriptHero.imports.multiLineWrapThreshold": 1250
+}

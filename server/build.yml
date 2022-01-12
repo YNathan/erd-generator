@@ -1,0 +1,29 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+  build:
+    commands:
+      npm install
+  post_build:
+    commands:
+      - mkdir build-output
+      - cp -R server.js build-output
+      - mkdir -p build-output/node_modules
+      - cp -R node_modules/* build-output/node_modules
+      - mkdir -p build-output/config
+      - cp -R config/* build-output/config
+      - chmod -R 755 build-output/config
+      - mkdir -p build-output/public
+      - cp -R public/* build-output/public
+      - chmod -R 755 build-output/public
+      - mkdir -p build-output/routes
+      - cp -R routes/* build-output/routes
+      - chmod -R 755 build-output/routes
+      - echo Build completed on `date`
+artifacts:
+  files: 
+    - '**/*'
+  base-directory: ' build-output'

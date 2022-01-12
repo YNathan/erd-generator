@@ -1,0 +1,31 @@
+<div *ngIf="!submited" class="column-container">
+
+  <mat-form-field>
+    <input matInput placeholder="Enter column name" [(ngModel)]="name" [formControl]="colName" required />
+    <mat-error *ngIf="colName.invalid">{{ getErrorMessage("colName") }}</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Choose Type"  [(ngModel)]="type">
+      <mat-option *ngFor="let item of colTypes" value="{{item}}">{{ item }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-slide-toggle [(ngModel)]="nullable">Nullable</mat-slide-toggle>
+  <mat-slide-toggle [(ngModel)]="isPk">Primary Key</mat-slide-toggle>
+
+  <mat-form-field>
+    <mat-select placeholder="Choose Parent Table" [(ngModel)]="tblParent" (selectionChange)="constraintParentTableChange(tblParent)">
+      <mat-option *ngFor="let item of parentTablesList" value="{{ item }}">{{ item }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Choose Parent Column" [(ngModel)]="colParent">
+      <mat-option *ngFor="let item of parentTableColumnsNames" value="{{ item }}">{{ item }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-button (click)="submitColumn()" color="primary">add</button>
+
+</div>
+
+
+

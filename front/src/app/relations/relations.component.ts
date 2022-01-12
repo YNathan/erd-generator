@@ -1,0 +1,13 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-relations',
+  templateUrl: './relations.component.html',
+  styleUrls: ['./relations.component.less']
+})
+export class RelationsComponent implements OnInit {
+  constructor() { }
+
+  ngOnInit() {}
+
+}
